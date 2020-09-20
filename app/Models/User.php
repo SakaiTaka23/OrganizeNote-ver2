@@ -57,4 +57,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
+
+    public function contents()
+    {
+        return $this->hasMany('App\Content');
+    }
+
+    public function tags()
+    {
+        return $this->hasMany('App\Tag');
+    }
 }

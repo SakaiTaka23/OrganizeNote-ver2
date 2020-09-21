@@ -11,7 +11,7 @@ interface TagServiceInterface
 
     public function getTags();
 
-    public function getTagName();
+    public function getTagName($id);
 
-    public function getArticles();
+    public function getArticles($id);
 }

@@ -7,7 +7,7 @@ interface ArticleServiceInterface
 
     public function users();
 
-    public function contents();
+    public function table_of_contents();
 
     public function tags();
 

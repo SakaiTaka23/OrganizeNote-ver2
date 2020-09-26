@@ -8,5 +8,5 @@ interface UserServiceInterface
 
     public function getProfile($name);
 
-    public function getNoteid($name);
+    public function getNoteid($id);
 }

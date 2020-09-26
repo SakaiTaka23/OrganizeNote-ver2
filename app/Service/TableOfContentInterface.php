@@ -2,10 +2,10 @@
 
 namespace App\Service;
 
-interface TableOfContents
+interface TableOfContentInterface
 {
     public function getRandomContents();
 
-    public function findContents();
+    public function findContents($request);
 
 }

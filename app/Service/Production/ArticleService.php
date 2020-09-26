@@ -9,17 +9,19 @@ use App\Models\Article;
 class ArticleService implements ArticleServiceInterface
 {
 
-    public function __construct(Article $article, Auth $auth)
+    public function __construct(Article $article)
     {
         $this->article = $article;
         $this->auth = Auth::user();
     }
 
+    //インデックスページに表示する記事を投稿日が新しい順に取得
     public function getIndex()
     {
         return $this->article->where('user_id', $this->auth->id)->orderBy('created_at', 'desc')->paginate(30);
     }
 
+    //記事の検索を行う
     public function findArticle($request)
     {
         $from = $request->datefrom;

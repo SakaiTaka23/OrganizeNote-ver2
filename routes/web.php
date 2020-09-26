@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('dashboard',function(){
         return view('dashboard');
     });
-    // Route::resource('index', 'ArticleController')->only(['index']);
+    //Route::resource('index', 'ArticleController')->only(['index']);
+    Route::resource('index',ArticleController::class);
     // Route::get('searchArticle', 'ArticleController@search')->name('searchArticle');
     // Route::resource('tag', 'TagController')->only(['index', 'show']);
     // Route::get('profile', 'UserController@index')->name('profile');

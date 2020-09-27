@@ -24,8 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        'noteid',
         'password',
     ];
 
@@ -46,9 +45,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
 
     /**
      * The accessors to append to the model's array form.
@@ -58,4 +57,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    public function articles()
+    {
+        return $this->hasMany('App\Models\Article');
+    }
+
+    public function contents()
+    {
+        return $this->hasMany('App\Models\Content');
+    }
+
+    public function tags()
+    {
+        return $this->hasMany('App\Models\Tag');
+    }
 }

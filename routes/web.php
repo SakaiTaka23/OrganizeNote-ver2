@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\TableOfContentController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -22,17 +23,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
-    Route::get('dashboard', function () {
-        return view('dashboard');
-    });
-    Route::get('/index', [ArticleController::class, 'index'])->name('userIndex');
-    Route::get('/searchArticle', [ArticleController::class, 'search'])->name('searchArticle');
+    Route::get('index', [ArticleController::class, 'index'])->name('userIndex');
+    Route::get('searchArticle', [ArticleController::class, 'search'])->name('searchArticle');
     Route::resource('tag', TagController::class)->only(['index', 'show']);
-    Route::get('/content', [TableOfContentController::class, 'index'])->name('content');
-    Route::get('/searchContent', [TableOfContentController::class, 'search'])->name('searchContent');
+    Route::get('status', [UserController::class, 'index'])->name('status');
+    Route::get('content', [TableOfContentController::class, 'index'])->name('content');
+    Route::get('searchContent', [TableOfContentController::class, 'search'])->name('searchContent');
 });

@@ -5,17 +5,13 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="/dashboard">
+                    <a href="/">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-jet-nav-link>
-
                     <x-jet-nav-link href="{{ route('userIndex') }}" :active="request()->routeIs('userIndex')">
                         {{ __('Index') }}
                     </x-jet-nav-link>
@@ -26,6 +22,14 @@
 
                     <x-jet-nav-link href="{{ route('content') }}" :active="request()->routeIs('content')">
                         {{ __('Content') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('status') }}" :active="request()->routeIs('status')">
+                        {{ __('Profile') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                        {{ __('Settings') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -42,14 +46,6 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <!-- Account Management -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Manage Account') }}
-                        </div>
-
-                        <x-jet-dropdown-link href="/user/profile">
-                            {{ __('Profile') }}
-                        </x-jet-dropdown-link>
 
                         @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                         <x-jet-dropdown-link href="/user/api-tokens">

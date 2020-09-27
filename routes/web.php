@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\TableOfContentController;
 use App\Http\Controllers\TagController;
 
 
@@ -29,9 +30,9 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('dashboard', function () {
         return view('dashboard');
     });
-    Route::resource('index', ArticleController::class)->only(['index']);
+    Route::get('/index', [ArticleController::class, 'index'])->name('userIndex');
     Route::get('/searchArticle', [ArticleController::class, 'search'])->name('searchArticle');
-    //Route::resource('tag', TagController::class)->only(['index', 'show']);
-    // Route::get('/content', [TableOfContentController::class, 'index'])->name('content');
-    // Route::get('/searchContent', [TableOfContentController::class, 'search'])->name('searchContent');
+    Route::resource('tag', TagController::class)->only(['index', 'show']);
+    Route::get('/content', [TableOfContentController::class, 'index'])->name('content');
+    Route::get('/searchContent', [TableOfContentController::class, 'search'])->name('searchContent');
 });

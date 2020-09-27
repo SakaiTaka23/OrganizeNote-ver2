@@ -65,16 +65,16 @@ class User extends Authenticatable
 
     public function articles()
     {
-        return $this->hasMany('App\Article');
+        return $this->hasMany('App\Models\Article');
     }
 
     public function contents()
     {
-        return $this->hasMany('App\Content');
+        return $this->hasMany('App\Models\Content');
     }
 
     public function tags()
     {
-        return $this->hasMany('App\Tag');
+        return $this->hasMany('App\Models\Tag');
     }
 }

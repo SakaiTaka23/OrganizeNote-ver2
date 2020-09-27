@@ -21,16 +21,16 @@ class Article extends Model
 
     public function users()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function table_of_contents()
     {
-        return $this->belongsToMany('TableOfContent');
+        return $this->belongsToMany('App\Models\TableOfContent');
     }
 
     public function tags()
     {
-        return $this->belongsToMany('Tag');
+        return $this->belongsToMany('App\Models\Tag');
     }
 }

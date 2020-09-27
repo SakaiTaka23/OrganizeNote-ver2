@@ -17,11 +17,11 @@ class TableOfContent extends Model
 
     public function articles()
     {
-        return $this->belongsToMany('Article');
+        return $this->belongsToMany('App\Models\Article');
     }
 
     public function users()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('App\Models\User');
     }
 }

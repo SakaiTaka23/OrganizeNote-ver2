@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <form method="GET" action="#">
+                <form method="GET" action="{{ route('searchArticle') }}">
                     <div class="form-group row">
 
                         <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('題名：') }}</label>

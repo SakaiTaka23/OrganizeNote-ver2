@@ -12,7 +12,14 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .scripts([
+        'resources/js/charts-bars.js',
+        'resources/js/charts-lines.js',
+        'resources/js/charts-pie.js',
+        'resources/js/focus-trap.js',
+        'resources/js/init-alpine.js'
+    ], 'public/js/theme.js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
-    ]);
+    ])

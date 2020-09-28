@@ -8,18 +8,21 @@
 
     <title>OraganizeNote-ver2</title>
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('icon/favicon.svg') }}" type='image/x-icon'>
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 
+    <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
+    @livewireStyles
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
     <script src="{{ asset('js/theme.js') }}"></script>
-
-    @livewireStyles
-
   </head>
 
   <body>
@@ -271,6 +274,7 @@
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
           <div
             class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+            
             <!-- Mobile hamburger -->
             <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
               @click="toggleSideMenu" aria-label="Menu">
@@ -654,6 +658,7 @@
                           </svg>
                         </button>
                       </li>
+                      
                       <li>
                         <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                           1
@@ -708,6 +713,8 @@
         </main>
       </div>
     </div>
-  </body>
 
+    @stack('modals')
+    @livewireScripts
+  </body>
 </html>

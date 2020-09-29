@@ -25,7 +25,7 @@
         <script src="{{ asset('js/theme.js') }}"></script>
     </head>
 
-    <body>
+    <body class="bg-white-50 dark:bg-gray-900">
         <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
             <!-- Desktop sidebar -->
             <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
@@ -346,7 +346,9 @@
                                                             aria-hidden="true"></div>
                                                     </div>
                                                     <div>
-                                                        <p class="font-semibold">Hans Burger</p>
+                                                        <p class="font-semibold">Hans Burger プログラミング学習249日目〜Laravel
+                                                            自動車整備履歴アプリ作成 1日目〜プログラミング学習249日目〜Laravel 自動車整備履歴アプリ作成
+                                                            1日目〜プログラミング学習249日目〜Laravel 自動車整備履歴アプリ作成 1日目〜</p>
                                                         <p class="text-xs text-gray-600 dark:text-gray-400">
                                                             10x Developer
                                                         </p>

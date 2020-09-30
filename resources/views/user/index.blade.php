@@ -26,13 +26,13 @@
         <button type="button" onclick='window.reset()'>リセット</button>
     </form>
 
-    <div class="flex">
+    <div class="flex mb-5">
         {{ $articles->appends(request()->input())->links() }}
     </div>
 
     <div class='w-full overflow-hidden rounded-lg shadow-lg'>
         <div class='w-full overflow-x-auto'>
-            <table class="w-full whitespace-no-wrap">
+            <table class="w-full whitespace-no-wrap mb-10">
                 <thead>
                     <tr
                         class='text-lg font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800'>

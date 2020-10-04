@@ -6,6 +6,5 @@ interface TableOfContentInterface
 {
     public function getRandomContents();
 
-    public function findContents($request);
-
+    public function findContents($contnet);
 }

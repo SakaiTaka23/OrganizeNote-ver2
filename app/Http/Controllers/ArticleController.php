@@ -36,7 +36,7 @@ class ArticleController extends Controller
     public function search(Request $request, ArticleServiceInterface $article)
     {
         $title = $request->title;
-        $articles = $article->findArticle($request);
+        $articles = $article->findArticle($request->datefrom, $request->dateto, $request->title);
         $noteid = $this->user->getNoteid();
         $dates['from'] = $request->datefrom;
         $dates['to'] = $request->dateto;

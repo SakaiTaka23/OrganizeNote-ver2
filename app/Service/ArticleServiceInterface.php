@@ -6,6 +6,5 @@ interface ArticleServiceInterface
 {
     public function getIndex();
 
-    public function findArticle($request);
-
+    public function findArticle($datefrom, $dateto, $title);
 }

@@ -22,8 +22,8 @@ class TableOfContentService implements TableOfContentInterface
     }
 
     //目次での検索を行う
-    public function findContents($request)
+    public function findContents($content)
     {
-        return $this->tableofcontent->where('user_id', $this->auth->id)->with('articles')->where('name', 'like', '%' . $request->content . '%')->orderBy('name', 'asc')->paginate(30);
+        return $this->tableofcontent->where('user_id', $this->auth->id)->with('articles')->where('name', 'like', '%' . $content . '%')->orderBy('name', 'asc')->paginate(30);
     }
 }

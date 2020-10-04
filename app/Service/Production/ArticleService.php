@@ -24,18 +24,18 @@ class ArticleService implements ArticleServiceInterface
     }
 
     //記事の検索を行う
-    public function findArticle($request)
+    public function findArticle($datefrom, $dateto, $title)
     {
-        $from = $request->datefrom;
+        $from = $datefrom;
         if (!isset($from)) {
             $from = '2014-04-07';
         }
-        $to = $request->dateto;
+        $to = $dateto;
         if (!isset($to)) {
             $to = now();
         }
 
-        $articles = $this->article->where('user_id', $this->auth->id)->where('title', 'like', '%' . $request->title . '%');
+        $articles = $this->article->where('user_id', $this->auth->id)->where('title', 'like', '%' . $title . '%');
         $articles = $articles->whereBetween('created_at', [$from, $to])->orderBy('created_at', 'desc')->paginate(30);
         return $articles;
     }

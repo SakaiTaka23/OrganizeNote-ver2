@@ -25,7 +25,7 @@ class TableOfContentController extends Controller
     public function index(TableOfContentInterface $tableofcontent)
     {
         $noteid = $this->user->getNoteid();
-        $random_tableofcontents = $tableofcontent->getRandomContents();
+        $random_tableofcontents = $tableofcontent->getRandomContents(30);
         return view('user.content', compact('random_tableofcontents', 'noteid'));
     }
 
@@ -33,7 +33,7 @@ class TableOfContentController extends Controller
     {
         $noteid = $user->getNoteid();
         $tableofcontent_name = $request->content;
-        $tableofcontents = $tableofcontent->findContents($tableofcontent_name);
+        $tableofcontents = $tableofcontent->findContents($tableofcontent_name, 30);
         return view('user.contentsearch', compact('noteid', 'tableofcontent_name', 'tableofcontents'));
     }
 }

@@ -4,7 +4,7 @@ namespace App\Service;
 
 interface ArticleServiceInterface
 {
-    public function getIndex();
+    public function getIndex($paginate);
 
-    public function findArticle($datefrom, $dateto, $title);
+    public function findArticle($datefrom, $min_date, $dateto, $max_date, $title, $paginate);
 }

@@ -4,7 +4,7 @@ namespace App\Service;
 
 interface TagServiceInterface
 {
-    public function getTags();
+    public function getTags($paginate);
 
     public function getTagName($id);
 

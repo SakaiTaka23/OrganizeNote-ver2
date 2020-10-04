@@ -16,9 +16,9 @@ class TagService implements TagServiceInterface
     }
 
     //その人が使用したことのあるタグを使用した回数と共に探し出す
-    public function getTags()
+    public function getTags($paginate)
     {
-        return $this->tag->select('id', 'name')->where('user_id', $this->auth->id)->withCount('articles')->orderBy('articles_count', 'desc')->orderBy('name', 'asc')->paginate(30);
+        return $this->tag->select('id', 'name')->where('user_id', $this->auth->id)->withCount('articles')->orderBy('articles_count', 'desc')->orderBy('name', 'asc')->paginate($paginate);
     }
 
     //タグのidを受け取りその名前を返す

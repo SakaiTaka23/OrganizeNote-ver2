@@ -16,14 +16,14 @@ class TableOfContentService implements TableOfContentInterface
     }
 
     //その人の記事をランダムに30件取得
-    public function getRandomContents()
+    public function getRandomContents($paginate)
     {
-        return $this->tableofcontent->where('user_id', $this->auth->id)->inRandomOrder()->with('articles')->paginate(30);
+        return $this->tableofcontent->where('user_id', $this->auth->id)->inRandomOrder()->with('articles')->paginate($paginate);
     }
 
     //目次での検索を行う
-    public function findContents($content)
+    public function findContents($content, $paginate)
     {
-        return $this->tableofcontent->where('user_id', $this->auth->id)->with('articles')->where('name', 'like', '%' . $content . '%')->orderBy('name', 'asc')->paginate(30);
+        return $this->tableofcontent->where('user_id', $this->auth->id)->with('articles')->where('name', 'like', '%' . $content . '%')->orderBy('name', 'asc')->paginate($paginate);
     }
 }

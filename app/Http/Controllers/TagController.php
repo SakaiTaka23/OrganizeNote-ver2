@@ -22,7 +22,7 @@ class TagController extends Controller
 
     public function index(TagServiceInterface $tag)
     {
-        $tags = $tag->getTags();
+        $tags = $tag->getTags(30);
         return view('user.tag', compact('tags'));
     }
 

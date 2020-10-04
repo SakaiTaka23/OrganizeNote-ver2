@@ -26,8 +26,8 @@ class ArticleController extends Controller
     public function Index(ArticleServiceInterface $article)
     {
         //dd($article,$this->article);
-        $articles = $article->getIndex();
-        // $articles = $this->article->getIndex();
+        $articles = $article->getIndex(30);
+        // $articles = $this->article->getIndex(30);
         $noteid = $this->user->getNoteid();
         $today = date('Y-m-d');
         return view('user.index', compact('articles', 'noteid', 'today'));
@@ -36,7 +36,7 @@ class ArticleController extends Controller
     public function search(Request $request, ArticleServiceInterface $article)
     {
         $title = $request->title;
-        $articles = $article->findArticle($request->datefrom, $request->dateto, $request->title);
+        $articles = $article->findArticle($request->datefrom, '2014-04-07', $request->dateto, now(), $request->title, 30);
         $noteid = $this->user->getNoteid();
         $dates['from'] = $request->datefrom;
         $dates['to'] = $request->dateto;

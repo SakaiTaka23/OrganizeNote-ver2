@@ -17,26 +17,25 @@ class ArticleService implements ArticleServiceInterface
     }
 
     //インデックスページに表示する記事を投稿日が新しい順に取得
-    public function getIndex()
+    public function getIndex($paginate)
     {
-        //dd($this->article);
-        return $this->article->where('user_id', $this->auth->id)->orderBy('created_at', 'desc')->paginate(30);
+        return $this->article->where('user_id', $this->auth->id)->orderBy('created_at', 'desc')->paginate($paginate);
     }
 
     //記事の検索を行う
-    public function findArticle($datefrom, $dateto, $title)
+    public function findArticle($datefrom, $min_date, $dateto, $max_date, $title, $paginate)
     {
         $from = $datefrom;
         if (!isset($from)) {
-            $from = '2014-04-07';
+            $from = $min_date;
         }
         $to = $dateto;
         if (!isset($to)) {
-            $to = now();
+            $to = $max_date;
         }
 
         $articles = $this->article->where('user_id', $this->auth->id)->where('title', 'like', '%' . $title . '%');
-        $articles = $articles->whereBetween('created_at', [$from, $to])->orderBy('created_at', 'desc')->paginate(30);
+        $articles = $articles->whereBetween('created_at', [$from, $to])->orderBy('created_at', 'desc')->paginate($paginate);
         return $articles;
     }
 }

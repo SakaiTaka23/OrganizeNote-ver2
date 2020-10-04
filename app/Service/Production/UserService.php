@@ -43,7 +43,7 @@ class UserService implements UserServiceInterface
     }
 
     //idを受け取りnoteidを返す
-    public function getNoteid($id)
+    public function getNoteid()
     {
         return $this->user->noteid;
     }

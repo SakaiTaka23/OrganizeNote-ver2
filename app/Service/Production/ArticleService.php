@@ -8,6 +8,7 @@ use App\Models\Article;
 
 class ArticleService implements ArticleServiceInterface
 {
+    protected $article;
 
     public function __construct(Article $article)
     {
@@ -18,6 +19,7 @@ class ArticleService implements ArticleServiceInterface
     //インデックスページに表示する記事を投稿日が新しい順に取得
     public function getIndex()
     {
+        //dd($this->article);
         return $this->article->where('user_id', $this->auth->id)->orderBy('created_at', 'desc')->paginate(30);
     }
 

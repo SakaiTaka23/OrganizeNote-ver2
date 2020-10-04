@@ -10,24 +10,28 @@ use Illuminate\Support\Facades\Auth;
 
 class TableOfContentController extends Controller
 {
-    public function __construct()
+    protected $tableofcontent,$user;
+
+    public function __construct(TableOfContentInterface $tableofcontent,UserServiceInterface $user)
     {
+        $this->tableofcontent = $tableofcontent;
+        $this->user = $user;
         $this->middleware(function ($request, $next) {
             $this->auth = Auth::user();
             return $next($request);
         });
     }
 
-    public function index(TableOfContentInterface $tableofcontent, UserServiceInterface $user)
+    public function index(TableOfContentInterface $tableofcontent)
     {
-        $noteid = $user->getNoteid($this->auth->id);
+        $noteid = $this->user->getNoteid();
         $random_tableofcontents = $tableofcontent->getRandomContents();
         return view('user.content', compact('random_tableofcontents', 'noteid'));
     }
 
     public function search(Request $request, TableOfContentInterface $tableofcontent, UserServiceInterface $user)
     {
-        $noteid = $user->getNoteid($this->auth->id);
+        $noteid = $user->getNoteid();
         $tableofcontent_name = $request->content;
         $tableofcontents = $tableofcontent->findContents($request);
         return view('user.contentsearch', compact('noteid', 'tableofcontent_name', 'tableofcontents'));

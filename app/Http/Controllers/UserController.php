@@ -7,17 +7,20 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function __construct()
+    protected $user;
+
+    public function __construct(UserServiceInterface $user)
     {
+        $this->user = $user;
         $this->middleware(function ($request, $next) {
             $this->auth = Auth::user();
             return $next($request);
         });
     }
 
-    public function index(UserServiceInterface $user)
+    public function index()
     {
-        $user_info = $user->getProfile($this->auth->noteid);
+        $user_info = $this->user->getProfile($this->auth->noteid);
         return view('user.profile', compact('user_info'));
     }
 }

@@ -9,27 +9,35 @@ use App\Service\UserServiceInterface;
 
 class ArticleController extends Controller
 {
-    public function __construct()
-    {
+    protected $article, $user;
+
+    public function __construct(
+        ArticleServiceInterface $article,
+        UserServiceInterface $user
+    ) {
+        $this->article = $article;
+        $this->user = $user;
         $this->middleware(function ($request, $next) {
             $this->auth = Auth::user();
             return $next($request);
         });
     }
 
-    public function Index(ArticleServiceInterface $article, UserServiceInterface $user)
+    public function Index(ArticleServiceInterface $article)
     {
+        //dd($article,$this->article);
         $articles = $article->getIndex();
-        $noteid = $user->getNoteid($this->auth->id);
+        // $articles = $this->article->getIndex();
+        $noteid = $this->user->getNoteid();
         $today = date('Y-m-d');
         return view('user.index', compact('articles', 'noteid', 'today'));
     }
 
-    public function search(Request $request, ArticleServiceInterface $article, UserServiceInterface $user)
+    public function search(Request $request, ArticleServiceInterface $article)
     {
         $title = $request->title;
         $articles = $article->findArticle($request);
-        $noteid = $user->getNoteid($this->auth->id);
+        $noteid = $this->user->getNoteid();
         $dates['from'] = $request->datefrom;
         $dates['to'] = $request->dateto;
         $today = date('Y-m-d');

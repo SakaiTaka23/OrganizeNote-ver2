@@ -7,6 +7,4 @@ interface UserServiceInterface
     public function updateCount($name);
 
     public function getProfile($name);
-
-    public function getNoteid();
 }

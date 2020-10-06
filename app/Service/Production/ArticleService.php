@@ -4,6 +4,7 @@ namespace App\Service\Production;
 
 use App\Service\ArticleServiceInterface;
 use App\Models\Article;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ArticleService implements ArticleServiceInterface
 {
@@ -15,13 +16,13 @@ class ArticleService implements ArticleServiceInterface
     }
 
     //インデックスページに表示する記事を投稿日が新しい順に取得
-    public function getIndex($auth_id, $paginate)
+    public function getIndex(int $auth_id, int $paginate): LengthAwarePaginator
     {
         return $this->article->where('user_id', $auth_id)->orderBy('created_at', 'desc')->paginate($paginate);
     }
 
     //記事の検索を行う
-    public function findArticle($auth_id, $datefrom, $min_date, $dateto, $max_date, $title, $paginate)
+    public function findArticle(int $auth_id,string $datefrom=null, string $min_date,string $dateto=null, string $max_date, string $title=null, int $paginate): LengthAwarePaginator
     {
         $from = $datefrom;
         if (!isset($from)) {

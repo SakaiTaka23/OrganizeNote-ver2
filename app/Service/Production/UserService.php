@@ -3,8 +3,8 @@
 namespace App\Service\Production;
 
 use GuzzleHttp\Client;
+
 use App\Service\UserServiceInterface;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class UserService implements UserServiceInterface
@@ -39,11 +39,5 @@ class UserService implements UserServiceInterface
             $profile['twitter'] = '@' . $posts['socials']['twitter']['nickname'];
         }
         return $profile;
-    }
-
-    //idを受け取りnoteidを返す
-    public function getNoteid()
-    {
-        return $this->user->noteid;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use App\Service\ArticleServiceInterface;
 use App\Service\UserServiceInterface;
 
@@ -27,7 +28,7 @@ class ArticleController extends Controller
     public function Index()
     {
         $articles = $this->article->getIndex($this->auth->id, 30);
-        $noteid = $this->user->getNoteid();
+        $noteid = $this->auth->noteid;
         $today = date('Y-m-d');
         return view('user.index', compact('articles', 'noteid', 'today'));
     }
@@ -36,7 +37,7 @@ class ArticleController extends Controller
     {
         $title = $request->title;
         $articles = $this->article->findArticle($this->auth->id, $request->datefrom, '2014-04-07', $request->dateto, now(), $request->title, 30);
-        $noteid = $this->user->getNoteid();
+        $noteid = $this->auth->noteid;
         $dates['from'] = $request->datefrom;
         $dates['to'] = $request->dateto;
         $today = date('Y-m-d');

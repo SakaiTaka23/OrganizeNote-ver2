@@ -31,7 +31,7 @@ class TagController extends Controller
 
     public function show($id)
     {
-        $noteid = $this->user->getNoteid();
+        $noteid = $this->auth->noteid;
         $tag_name = $this->tag->getTagName($id);
         $articles_from_tag = $this->tag->getArticles($this->auth->id, $id);
         return view('user.tagshow', compact('noteid', 'tag_name', 'articles_from_tag'));

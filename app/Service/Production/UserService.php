@@ -12,7 +12,6 @@ class UserService implements UserServiceInterface
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->auth = Auth::user();
     }
 
     //その人が投稿した記事の数を更新する

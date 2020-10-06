@@ -4,7 +4,7 @@ namespace App\Service;
 
 interface TableOfContentInterface
 {
-    public function getRandomContents($paginate);
+    public function getRandomContents($auth_id, $paginate);
 
-    public function findContents($contnet, $paginate);
+    public function findContents($auth_id, $contnet, $paginate);
 }

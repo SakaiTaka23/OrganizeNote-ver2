@@ -9,16 +9,16 @@ use App\Models\Tag;
 class TagService implements TagServiceInterface
 {
 
-    public function __construct(Tag $tag)
-    {
+    public function __construct(
+        Tag $tag
+    ) {
         $this->tag = $tag;
-        $this->auth = Auth::user();
     }
 
     //その人が使用したことのあるタグを使用した回数と共に探し出す
-    public function getTags($paginate)
+    public function getTags($auth_id, $paginate)
     {
-        return $this->tag->select('id', 'name')->where('user_id', $this->auth->id)->withCount('articles')->orderBy('articles_count', 'desc')->orderBy('name', 'asc')->paginate($paginate);
+        return $this->tag->select('id', 'name')->where('user_id', $auth_id)->withCount('articles')->orderBy('articles_count', 'desc')->orderBy('name', 'asc')->paginate($paginate);
     }
 
     //タグのidを受け取りその名前を返す
@@ -29,9 +29,9 @@ class TagService implements TagServiceInterface
     }
 
     //そのタグが使われている記事を返す
-    public function getArticles($id)
+    public function getArticles($auht_id, $id)
     {
-        $articles = $this->tag->with('articles')->where('user_id', $this->auth->id)->where('id', $id)->orderBy('name', 'asc')->get();
+        $articles = $this->tag->with('articles')->where('user_id', $auht_id)->where('id', $id)->orderBy('name', 'asc')->get();
         return $articles[0]['articles'];
     }
 }

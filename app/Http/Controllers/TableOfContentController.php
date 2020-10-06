@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TableOfContent;
 use App\Service\TableOfContentInterface;
 use App\Service\UserServiceInterface;
 use Illuminate\Http\Request;
@@ -12,8 +11,10 @@ class TableOfContentController extends Controller
 {
     protected $tableofcontent, $user;
 
-    public function __construct(TableOfContentInterface $tableofcontent, UserServiceInterface $user)
-    {
+    public function __construct(
+        TableOfContentInterface $tableofcontent,
+        UserServiceInterface $user
+    ) {
         $this->tableofcontent = $tableofcontent;
         $this->user = $user;
         $this->middleware(function ($request, $next) {
@@ -22,18 +23,18 @@ class TableOfContentController extends Controller
         });
     }
 
-    public function index(TableOfContentInterface $tableofcontent)
+    public function index()
     {
         $noteid = $this->user->getNoteid();
-        $random_tableofcontents = $tableofcontent->getRandomContents(30);
+        $random_tableofcontents = $this->tableofcontent->getRandomContents($this->auth->id, 30);
         return view('user.content', compact('random_tableofcontents', 'noteid'));
     }
 
-    public function search(Request $request, TableOfContentInterface $tableofcontent, UserServiceInterface $user)
+    public function search(Request $request)
     {
-        $noteid = $user->getNoteid();
+        $noteid = $this->user->getNoteid();
         $tableofcontent_name = $request->content;
-        $tableofcontents = $tableofcontent->findContents($tableofcontent_name, 30);
+        $tableofcontents = $this->tableofcontent->findContents($this->auth->id, $tableofcontent_name, 30);
         return view('user.contentsearch', compact('noteid', 'tableofcontent_name', 'tableofcontents'));
     }
 }

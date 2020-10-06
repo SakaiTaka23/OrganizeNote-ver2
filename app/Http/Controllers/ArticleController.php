@@ -9,7 +9,8 @@ use App\Service\UserServiceInterface;
 
 class ArticleController extends Controller
 {
-    protected $article, $user;
+    protected $article;
+    protected $user;
 
     public function __construct(
         ArticleServiceInterface $article,
@@ -23,20 +24,18 @@ class ArticleController extends Controller
         });
     }
 
-    public function Index(ArticleServiceInterface $article)
+    public function Index()
     {
-        //dd($article,$this->article);
-        $articles = $article->getIndex(30);
-        // $articles = $this->article->getIndex(30);
+        $articles = $this->article->getIndex($this->auth->id, 30);
         $noteid = $this->user->getNoteid();
         $today = date('Y-m-d');
         return view('user.index', compact('articles', 'noteid', 'today'));
     }
 
-    public function search(Request $request, ArticleServiceInterface $article)
+    public function search(Request $request)
     {
         $title = $request->title;
-        $articles = $article->findArticle($request->datefrom, '2014-04-07', $request->dateto, now(), $request->title, 30);
+        $articles = $this->article->findArticle($this->auth->id, $request->datefrom, '2014-04-07', $request->dateto, now(), $request->title, 30);
         $noteid = $this->user->getNoteid();
         $dates['from'] = $request->datefrom;
         $dates['to'] = $request->dateto;

@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
-    protected $tag, $user;
+    protected $tag;
+    protected $user;
 
-    public function __construct(TagServiceInterface $tag, UserServiceInterface $user)
-    {
+    public function __construct(
+        TagServiceInterface $tag,
+        UserServiceInterface $user
+    ) {
         $this->tag = $tag;
         $this->user = $user;
         $this->middleware(function ($request, $next) {
@@ -20,17 +23,17 @@ class TagController extends Controller
         });
     }
 
-    public function index(TagServiceInterface $tag)
+    public function index()
     {
-        $tags = $tag->getTags(30);
+        $tags = $this->tag->getTags($this->auth->id, 30);
         return view('user.tag', compact('tags'));
     }
 
-    public function show($id, TagServiceInterface $tag)
+    public function show($id)
     {
         $noteid = $this->user->getNoteid();
-        $tag_name = $tag->getTagName($id);
-        $articles_from_tag = $tag->getArticles($id);
+        $tag_name = $this->tag->getTagName($id);
+        $articles_from_tag = $this->tag->getArticles($this->auth->id, $id);
         return view('user.tagshow', compact('noteid', 'tag_name', 'articles_from_tag'));
     }
 }

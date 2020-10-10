@@ -22,7 +22,7 @@ class TableOfContentService implements TableOfContentInterface
     }
 
     //目次での検索を行う
-    public function findContents(int $auth_id, string $content, int $paginate): LengthAwarePaginator
+    public function findContents(int $auth_id, string $content = null, int $paginate): LengthAwarePaginator
     {
         return $this->tableofcontent->where('user_id', $auth_id)->with('articles')->where('name', 'like', '%' . $content . '%')->orderBy('name', 'asc')->paginate($paginate);
     }

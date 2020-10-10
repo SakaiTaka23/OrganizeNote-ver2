@@ -9,7 +9,7 @@
                 <div class="relative">
                     <input type="text" name="content" id="content"
                         class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                        placeholder="目次検索" />
+                        placeholder="目次検索 空白の場合はあいうえお順でソートします" />
                     <button type="submit"
                         class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                         検索

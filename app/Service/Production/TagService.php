@@ -10,6 +10,7 @@ use App\Models\Tag;
 
 class TagService implements TagServiceInterface
 {
+    private $tag;
 
     public function __construct(Tag $tag)
     {

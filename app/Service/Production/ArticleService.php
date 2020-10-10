@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ArticleService implements ArticleServiceInterface
 {
-    protected $article;
+    private $article;
 
     public function __construct(Article $article)
     {

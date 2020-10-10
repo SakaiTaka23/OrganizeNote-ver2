@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Index
+        Content
     </x-slot>
 
     <form method="GET" action="{{ route('searchContent') }}">

@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class TableOfContentController extends Controller
 {
-    protected $tableofcontent;
-    protected $user;
+    private $tableofcontent;
+    private $user;
 
     public function __construct(
         TableOfContentInterface $tableofcontent,

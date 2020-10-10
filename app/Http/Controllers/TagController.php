@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
-    protected $tag;
-    protected $user;
+    private $tag;
+    private $user;
 
     public function __construct(
         TagServiceInterface $tag,

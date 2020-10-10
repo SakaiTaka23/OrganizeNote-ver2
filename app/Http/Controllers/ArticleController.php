@@ -10,8 +10,8 @@ use App\Service\UserServiceInterface;
 
 class ArticleController extends Controller
 {
-    protected $article;
-    protected $user;
+    private $article;
+    private $user;
 
     public function __construct(
         ArticleServiceInterface $article,

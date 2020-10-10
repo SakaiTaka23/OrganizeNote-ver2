@@ -8,6 +8,7 @@ use App\Models\TableOfContent;
 
 class TableOfContentService implements TableOfContentInterface
 {
+    private $tableOfContent;
 
     public function __construct(TableOfContent $tableOfContent)
     {

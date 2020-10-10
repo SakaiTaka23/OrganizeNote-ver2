@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    protected $user;
+    private $user;
 
     public function __construct(UserServiceInterface $user)
     {

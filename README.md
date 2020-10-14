@@ -7,13 +7,19 @@ https://github.com/SakaiTaka23/OrganizeNote
 
 Laravel version 8.0
 
-# 概要
+
+
+## 概要
+
 https://note.com/ に関して投稿した記事の整理を可能にするアプリ
 
 ユーザーはログイン後記事の題名、目次、タグから投稿を確認、記事に飛ぶことができる他  
 ユーザー自身のプロフィールも確認できる。
 
-# インストール
+
+
+## インストール
+
 laravel・データベースの環境(mysql)は持っていることが前提
 
 git clone https://github.com/SakaiTaka23/OrganizeNote-ver2.git  
@@ -24,13 +30,39 @@ php artisan key:generate
 cp .env.example .env  
 .envファイルのデータベース、ユーザーネーム、パスワードの修正  
 php artisan migrate:fresh  
-php artisan serve  
+php artisan serve
 
-# ログインurl
+  
+
+## ログインurl
 
 {domain}/login
 
-# 注意点
-## 新規登録
+
+
+## タスクスケジュール
+
+* 毎日3:00に実行させる
+* 1ヶ月以上ログインしていない人はユーザー情報を消す
+* 既存ユーザーの記事の更新
+* 新たに登録したユーザーの記事の全取得
+
+
+
+### 新たに登録したユーザーの記事の取得
+
+1. 対象のユーザーを取得
+
+
+
+## 注意点
+
+**新規登録**
 
 ・noteurlとはnote公式でnoteidと呼ばれているものを指している
+
+
+
+## 問題点
+
+ログイン後の処理を付け加える関数が見つからない

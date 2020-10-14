@@ -29,6 +29,7 @@ class CreateNewUser implements CreatesNewUsers
         return User::create([
             'noteid' => $input['noteid'],
             'password' => Hash::make($input['password']),
+            'last_login' => now(),
         ]);
     }
 }

@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use App\Rules\NoteID;
+
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -20,7 +22,7 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'noteid' => ['required', 'string', 'max:255'],
+            'noteid' => ['required', 'string', 'max:16', 'regex:/^[0-9a-z_]*$/', 'unique:users,noteid', new NoteID],
             'password' => $this->passwordRules(),
         ])->validate();
 

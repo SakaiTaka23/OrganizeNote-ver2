@@ -11,7 +11,7 @@ use App\Models\TableOfContent;
 use App\Models\Tag;
 use App\Models\User;
 
-class FirstTask extends Command
+class FirstTaskCommand extends Command
 {
     /**
      * The name and signature of the console command.

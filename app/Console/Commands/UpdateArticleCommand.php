@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -13,7 +12,7 @@ use App\models\TableOfContent;
 use App\Models\Tag;
 use App\Models\User;
 
-class UpdateArticle extends Command
+class UpdateArticleCommand extends Command
 {
     /**
      * The name and signature of the console command.

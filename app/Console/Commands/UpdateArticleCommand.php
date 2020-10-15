@@ -46,9 +46,6 @@ class UpdateArticleCommand extends Command
     public function handle(User $user)
     {
         $need_update_user = $user->where('first_task_finished', 1)->get();
-        //$now = Carbon::now();
-        // $now = new Carbon('2020/10/14');
-        // $subMonths = $now->subMonth(1);
         foreach ($need_update_user as $user) {
             $this->updateCount($user->noteid, $user->id);
             $this->get_resent_articles($user->noteid, $user->id);

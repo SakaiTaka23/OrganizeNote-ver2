@@ -56,19 +56,22 @@ php artisan serve
 
 
 
-* 1ヶ月以上ログインしていない人はユーザー情報を消す
+* 1ヶ月以上ログインしていない人(非アクティブユーザー)はユーザー情報を消す DeleteNonActiveUserCommand
+
   1. last_loginを確認し、1ヶ月以上空いていればfalseにする
   2. falseになっているものは削除する
 
-* 新たに登録したユーザーの記事の全取得 FirstTask
+* 新たに登録したユーザーの記事の全取得 FirstTaskCommand
 
   **実装済み**
 
-* 既存ユーザーの記事の更新 UpdateArticle
+* 既存ユーザーの記事の更新 UpdateArticleCommand
 
   1. ユーザーを全取得(first_task_finishedがtrueの場合のみ)
   2. ユーザーの記事数を更新 get_resent_article
   3. ユーザーの今日の記事を取得、dbに保存
+
+  **実装済み**
 
 
 

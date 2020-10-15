@@ -48,15 +48,16 @@ class UpdateArticle extends Command
     {
         $need_update_user = $user->where('first_task_finished', 1)->get();
         //$now = Carbon::now();
-        $now = new Carbon('2020/10/14');
-        $subMonths = $now->subMonth(1);
+        // $now = new Carbon('2020/10/14');
+        // $subMonths = $now->subMonth(1);
         foreach ($need_update_user as $user) {
-            $this->get_resent_articles($user->noteid, $user->id, $now, $subMonths);
+            $this->updateCount($user->noteid, $user->id);
+            $this->get_resent_articles($user->noteid, $user->id);
         }
         return 0;
     }
 
-    public function get_resent_articles($note_id, $user_id, $now, $subMonths)
+    public function get_resent_articles($note_id, $user_id)
     {
         $page = 1;
         $url = 'https://note.com/api/v2/creators/' . $note_id . '/contents?kind=note&page=' . $page;
@@ -69,7 +70,7 @@ class UpdateArticle extends Command
         $resent_posts = [];
         foreach ($posts as $post) {
             $publishedAt = new Carbon($post['publishAt']);
-            if ($publishedAt->between($subMonths, $now)) {
+            if ($publishedAt->isYesterday()) {
                 if ($post['type'] == 'TextNote') {
                     array_unshift($resent_posts, $post);
                 }
@@ -77,9 +78,7 @@ class UpdateArticle extends Command
                 break;
             }
         }
-        print('resentposts');
-        dd($resent_posts);
-        print('ok');
+
         foreach ($resent_posts as $post) {
             $article = new Article();
             $article->title = $post['name'];
@@ -107,5 +106,19 @@ class UpdateArticle extends Command
             }
         }
         sleep(1);
+    }
+
+    public function updateCount($name, $user_id)
+    {
+        $url = 'https://note.com/api/v2/creators/' . $name;
+        $client = new Client();
+        $response = $client->request("GET", $url);
+        $posts = $response->getBody();
+        $posts = json_decode($posts, true);
+        $count = $posts['data']['noteCount'];
+        $user = User::find($user_id);
+
+        $user->fill(['article_count' => $count])->update();
+        return $count;
     }
 }

@@ -18,6 +18,14 @@ https://note.com/ に関して投稿した記事の整理を可能にするア�
 
 
 
+**apiサンプル**
+
+sample.json
+
+https://note.com/api/v2/creators/note_fumi/contents?kind=note&page=1
+
+
+
 ## インストール
 
 laravel・データベースの環境(mysql)は持っていることが前提
@@ -44,14 +52,23 @@ php artisan serve
 
 * 毎日3:00に実行させる
 
+* 順番　削除→更新→取得
+
 
 
 * 1ヶ月以上ログインしていない人はユーザー情報を消す
   1. last_loginを確認し、1ヶ月以上空いていればfalseにする
   2. falseになっているものは削除する
 
-* 既存ユーザーの記事の更新
-* 新たに登録したユーザーの記事の全取得
+* 新たに登録したユーザーの記事の全取得 FirstTask
+
+  **実装済み**
+
+* 既存ユーザーの記事の更新 UpdateArticle
+
+  1. ユーザーを全取得(first_task_finishedがtrueの場合のみ)
+  2. ユーザーの記事数を更新 get_resent_article
+  3. ユーザーの今日の記事を取得、dbに保存
 
 
 

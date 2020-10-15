@@ -3,29 +3,30 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 use GuzzleHttp\Client;
 
 use App\Models\Article;
-use App\Models\TableOfContent;
+use App\models\TableOfContent;
 use App\Models\Tag;
 use App\Models\User;
 
-class FirstTask extends Command
+class UpdateArticle extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:first-task';
+    protected $signature = 'command:update-article';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'get all article where users first task is false';
+    protected $description = 'get users articles that are recently published';
 
     /**
      * Create a new command instance.
@@ -37,29 +38,57 @@ class FirstTask extends Command
         parent::__construct();
     }
 
-
     /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle(User $user)
+    public function handle()
     {
-        $resent_user = $user->where('first_task_finished', 0)->get();
-        foreach ($resent_user as $user) {
-            $this->first_time($user->noteid, $user->id);
-            $user->first_task_finished = true;
-            $user->save();
-        }
         return 0;
     }
 
-    // noteid,そのuser_idを渡すと記事を全取得する
-    public function first_time($name, $user_id)
+    public function login_check($user, $user_id, $noteid)
     {
-        $count = $this->updateCount($name, $user_id);
-        $page = intval($count / 6);
-        if ($page % 6 != 0) $page++;
+        $last_date = DB::table('articles')->select('created_at')->latest()->first();
+
+        $user = new User;
+        //$auth = Auth::user();
+        $name = $noteid;
+        $count = $user->updateCount($name);
+        $page_max = intval($count / 6);
+        if ($page_max % 6 != 0) $page_max++;
+        $page = 1;
+        //$found = false;
+
+        for ($page; $page <= $page_max; $page++) {
+            $url = 'https://note.com/api/v2/creators/' . $name . '/contents?kind=note&page=' . $page;
+            $client = new Client();
+            $response = $client->request("GET", $url);
+            $posts = $response->getBody();
+            $posts = json_decode($posts, true);
+            $posts = $posts['data']['contents'];
+
+            // for ($i = 0; $i < count($posts); $i++) {
+            //     $anarticle = $posts[$i];
+            //     if ($last_date >= $anarticle['publishAt']) {
+            //         $found = true;
+            //         break;
+            //     }
+            // }
+
+            $anarticle = $posts[count($posts) - 1];
+            if ($last_date >= $anarticle['publishAt']) {
+                break;
+            } else {
+                sleep(1);
+            }
+
+            // if ($found) {
+            //     break;
+            // }
+            //sleep(1);
+        }
 
         for ($page; $page >= 1; $page--) {
             $url = 'https://note.com/api/v2/creators/' . $name . '/contents?kind=note&page=' . $page;
@@ -76,8 +105,14 @@ class FirstTask extends Command
                     continue;
                 }
                 $article = new Article();
-                $article->title = $anarticle['name'];
                 $article->key = $anarticle['key'];
+                $exists = DB::table('articles')->where('key', $article->key)->exists();
+                if ($exists) {
+                    continue;
+                }
+
+                $article->title = $anarticle['name'];
+                //$article->key = $anarticle['key'];
                 $article->user_id = $user_id;
                 $article->created_at = $anarticle['publishAt'];
                 $article->save();
@@ -102,19 +137,5 @@ class FirstTask extends Command
             }
             sleep(1);
         }
-    }
-
-    public function updateCount($name, $user_id)
-    {
-        $url = 'https://note.com/api/v2/creators/' . $name;
-        $client = new Client();
-        $response = $client->request("GET", $url);
-        $posts = $response->getBody();
-        $posts = json_decode($posts, true);
-        $count = $posts['data']['noteCount'];
-        $user = User::find($user_id);
-
-        $user->fill(['article_count' => $count])->update();
-        return $count;
     }
 }

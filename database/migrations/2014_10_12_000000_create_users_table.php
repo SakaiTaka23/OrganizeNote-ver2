@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->integer('article_count')->default(0);
             $table->string('password');
             $table->date('last_login')->default(now());
-            $table->boolean('is_active')->default(true);
             $table->boolean('first_task_finished')->default(false);
             $table->rememberToken();
             $table->string('current_team_id')->nullable();

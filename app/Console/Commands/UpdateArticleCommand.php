@@ -26,7 +26,7 @@ class UpdateArticleCommand extends Command
      *
      * @var string
      */
-    protected $description = 'get users articles that are recently published';
+    protected $description = 'get users(first_task_finished is true) articles that are recently published';
 
     /**
      * Create a new command instance.

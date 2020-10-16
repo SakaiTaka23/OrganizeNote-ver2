@@ -79,6 +79,7 @@ class FirstTaskCommand extends Command
                 if ($anarticle['type'] != 'TextNote') {
                     continue;
                 }
+                $this->article = new Article();
                 $this->article->title = $anarticle['name'];
                 $this->article->key = $anarticle['key'];
                 $this->article->user_id = $user_id;

@@ -81,6 +81,7 @@ class UpdateArticleCommand extends Command
         }
 
         foreach ($resent_posts as $post) {
+            $this->article = new Article();
             $this->article->title = $post['name'];
             $this->article->key = $post['key'];
             $this->article->user_id = $user_id;

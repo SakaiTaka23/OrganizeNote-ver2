@@ -33,8 +33,12 @@ class UpdateArticleCommand extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Article $article, Carbon $carbon, Client $client, User $user)
     {
+        $this->article = $article;
+        $this->carbon = $carbon;
+        $this->client = $client;
+        $this->user = $user;
         parent::__construct();
     }
 
@@ -43,9 +47,9 @@ class UpdateArticleCommand extends Command
      *
      * @return int
      */
-    public function handle(User $user)
+    public function handle()
     {
-        $need_update_user = $user->where('first_task_finished', 1)->get();
+        $need_update_user = $this->user->where('first_task_finished', 1)->get();
         foreach ($need_update_user as $user) {
             $this->updateCount($user->noteid, $user->id);
             $this->get_resent_articles($user->noteid, $user->id);
@@ -57,15 +61,14 @@ class UpdateArticleCommand extends Command
     {
         $page = 1;
         $url = 'https://note.com/api/v2/creators/' . $note_id . '/contents?kind=note&page=' . $page;
-        $client = new Client();
-        $response = $client->request("GET", $url);
+        $response = $this->client->request("GET", $url);
         $posts = $response->getBody();
         $posts = json_decode($posts, true);
         $posts = $posts['data']['contents'];
 
         $resent_posts = [];
         foreach ($posts as $post) {
-            $publishedAt = new Carbon($post['publishAt']);
+            $publishedAt = $this->carbon->parse($post['publishAt']);
             if ($publishedAt->isYesterday()) {
                 if ($post['type'] == 'TextNote') {
                     array_unshift($resent_posts, $post);
@@ -76,19 +79,18 @@ class UpdateArticleCommand extends Command
         }
 
         foreach ($resent_posts as $post) {
-            $article = new Article();
-            $article->title = $post['name'];
-            $article->key = $post['key'];
-            $article->user_id = $user_id;
-            $article->created_at = $post['publishAt'];
-            $article->save();
+            $this->article->title = $post['name'];
+            $this->article->key = $post['key'];
+            $this->article->user_id = $user_id;
+            $this->article->created_at = $post['publishAt'];
+            $this->article->save();
 
             if (isset($post['hashtags'])) {
                 $hashtags = $post['hashtags'];
                 for ($j = 0; $j < count($post['hashtags']); $j++) {
                     $tag = $hashtags[$j]['hashtag']['name'];
                     $tags = Tag::firstOrCreate(['name' => $tag, 'user_id' => $user_id]);
-                    $tags->articles()->attach($article);
+                    $tags->articles()->attach($this->article);
                 }
             }
 
@@ -97,7 +99,7 @@ class UpdateArticleCommand extends Command
                 for ($j = 0; $j < count($contentstable); $j++) {
                     $content = $contentstable[$j]['body'];
                     $contents = TableOfContent::firstOrCreate(['name' => $content, 'user_id' => $user_id]);
-                    $contents->articles()->attach($article);
+                    $contents->articles()->attach($this->article);
                 }
             }
         }
@@ -107,12 +109,11 @@ class UpdateArticleCommand extends Command
     public function updateCount($name, $user_id)
     {
         $url = 'https://note.com/api/v2/creators/' . $name;
-        $client = new Client();
-        $response = $client->request("GET", $url);
+        $response = $this->client->request("GET", $url);
         $posts = $response->getBody();
         $posts = json_decode($posts, true);
         $count = $posts['data']['noteCount'];
-        $user = User::find($user_id);
+        $user = $this->user->find($user_id);
 
         $user->fill(['article_count' => $count])->update();
         return $count;

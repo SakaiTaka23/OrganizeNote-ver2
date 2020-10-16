@@ -31,7 +31,7 @@ class DeleteNonActiveUserCommand extends Command
      */
     private $user;
 
-    public function __construct(User $user,Carbon $carbon)
+    public function __construct(Carbon $carbon, User $user)
     {
         $this->carbon = $carbon;
         $this->user = $user;

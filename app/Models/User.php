@@ -24,6 +24,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'noteid',
+        'article_count',
         'password',
     ];
 

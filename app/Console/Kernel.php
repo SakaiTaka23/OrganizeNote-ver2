@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\DeleteNonActiveUserCommand::class,
+        \App\Console\Commands\UpdateArticleCommand::class,
+        \App\Console\Commands\FirstTaskCommand::class,
     ];
 
     /**
@@ -24,10 +26,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        // $schedule->call(function(){
-            
-        // })->daily();
+        $schedule->command([
+            'command:delete-non-active-user',
+            'command:update-article',
+            'command:first-task'
+        ])->dailyAt('3:00')->withoutOverlapping();
     }
 
     /**
@@ -37,7 +40,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

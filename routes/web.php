@@ -23,9 +23,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', function () {
-    return view('test');
-});
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('index', [ArticleController::class, 'index'])->name('userIndex');

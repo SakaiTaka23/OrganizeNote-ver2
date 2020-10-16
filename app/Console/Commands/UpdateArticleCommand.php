@@ -33,11 +33,13 @@ class UpdateArticleCommand extends Command
      *
      * @return void
      */
-    public function __construct(Article $article, Carbon $carbon, Client $client, User $user)
+    public function __construct(Article $article, Carbon $carbon, Client $client, TableOfContent $tableofcontent, Tag $tag, User $user)
     {
         $this->article = $article;
         $this->carbon = $carbon;
         $this->client = $client;
+        $this->tableofcontent = $tableofcontent;
+        $this->tag = $tag;
         $this->user = $user;
         parent::__construct();
     }
@@ -89,7 +91,7 @@ class UpdateArticleCommand extends Command
                 $hashtags = $post['hashtags'];
                 for ($j = 0; $j < count($post['hashtags']); $j++) {
                     $tag = $hashtags[$j]['hashtag']['name'];
-                    $tags = Tag::firstOrCreate(['name' => $tag, 'user_id' => $user_id]);
+                    $tags = $this->tag->firstOrCreate(['name' => $tag, 'user_id' => $user_id]);
                     $tags->articles()->attach($this->article);
                 }
             }
@@ -98,7 +100,7 @@ class UpdateArticleCommand extends Command
                 $contentstable = $post['additionalAttr']['index'];
                 for ($j = 0; $j < count($contentstable); $j++) {
                     $content = $contentstable[$j]['body'];
-                    $contents = TableOfContent::firstOrCreate(['name' => $content, 'user_id' => $user_id]);
+                    $contents = $this->tableofcontent->firstOrCreate(['name' => $content, 'user_id' => $user_id]);
                     $contents->articles()->attach($this->article);
                 }
             }

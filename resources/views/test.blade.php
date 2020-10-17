@@ -274,7 +274,7 @@
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
           <div
             class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
-            
+
             <!-- Mobile hamburger -->
             <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
               @click="toggleSideMenu" aria-label="Menu">
@@ -658,7 +658,7 @@
                           </svg>
                         </button>
                       </li>
-                      
+
                       <li>
                         <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                           1
@@ -717,4 +717,5 @@
     @stack('modals')
     @livewireScripts
   </body>
+
 </html>

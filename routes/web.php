@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['auth','update.login']], function () {
     Route::get('index', [ArticleController::class, 'index'])->name('userIndex');
     Route::get('searchArticle', [ArticleController::class, 'search'])->name('searchArticle');
     Route::resource('tag', TagController::class)->only(['index', 'show']);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Utils;
+namespace App\Console\Commands\SaveCommands;
 
 use GuzzleHttp\Client;
 

@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 use GuzzleHttp\Client;
 
-use App\Console\Commands\Utils\CommandUtils;
+use App\Console\Commands\SaveCommands\CommandUtils;
 use App\Models\User;
 
 class FirstTaskCommand extends Command
@@ -49,7 +49,7 @@ class FirstTaskCommand extends Command
         $resent_user = $this->user->where('first_task_finished', 0)->get();
         foreach ($resent_user as $user) {
             $count = $this->commandutils->updateCount($user->noteid, $user->id);
-            $this->first_time($count, $user->noteid, $user->id);
+            $this->initialize_article($count, $user->noteid, $user->id);
             $user->first_task_finished = true;
             $user->save();
         }
@@ -57,7 +57,7 @@ class FirstTaskCommand extends Command
     }
 
     // noteid,そのuser_idを渡すと記事を全取得する
-    public function first_time($count, $name, $user_id)
+    public function initialize_article($count, $name, $user_id)
     {
         $page = intval($count / 6);
         if ($page % 6 != 0) $page++;

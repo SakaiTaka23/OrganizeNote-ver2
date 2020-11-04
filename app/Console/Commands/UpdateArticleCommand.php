@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 
-use App\Console\Commands\Utils\CommandUtils;
+use App\Console\Commands\SaveCommands\CommandUtils;
 use App\Models\User;
 
 class UpdateArticleCommand extends Command
@@ -50,12 +50,12 @@ class UpdateArticleCommand extends Command
         $need_update_user = $this->user->where('first_task_finished', 1)->get();
         foreach ($need_update_user as $user) {
             $this->commandutils->updateCount($user->noteid, $user->id);
-            $this->get_resent_articles($user->noteid, $user->id);
+            $this->fetch_resent_articles($user->noteid, $user->id);
         }
         return 0;
     }
 
-    public function get_resent_articles($note_id, $user_id)
+    public function fetch_resent_articles($note_id, $user_id)
     {
         $page = 1;
         $url = 'https://note.com/api/v2/creators/' . $note_id . '/contents?kind=note&page=' . $page;

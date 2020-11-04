@@ -22,12 +22,17 @@ class CommandUtils
 
     public function saveArticle_attach($post, $user_id)
     {
-        $this->article = new Article();
-        $this->article->title = $post['name'];
-        $this->article->key = $post['key'];
-        $this->article->user_id = $user_id;
-        $this->article->created_at = $post['publishAt'];
-        $this->article->save();
+        // $this->article = new Article();
+        $article_data = [];
+        $article_data['title'] = $post['name'];
+        $article_data['key'] = $post['key'];
+        $article_data['user_id'] = $user_id;
+        $article_data['created_at'] = $post['publishAt'];
+        // $this->article->title = $post['name'];
+        // $this->article->key = $post['key'];
+        // $this->article->user_id = $user_id;
+        // $this->article->created_at = $post['publishAt'];
+        $this->article = $this->article->create($article_data);
 
         if (isset($post['hashtags'])) {
             $hashtags = $post['hashtags'];

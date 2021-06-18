@@ -49,7 +49,7 @@ sail artisan key:generate
 sail artisan migrate:fresh
 ```
 
-
+- 開発中であれば http://127.0.0.1/ でページを閲覧可能
 
 ## ログイン url
 

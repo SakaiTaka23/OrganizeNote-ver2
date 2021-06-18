@@ -2,6 +2,6 @@
 
 namespace App\Service;
 
-interface ArticleTableOfContent
+interface ArticleTableOfContentServiceInterface
 {
 }

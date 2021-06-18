@@ -2,6 +2,6 @@
 
 namespace App\Service;
 
-interface ArticleTag
+interface ArticleTagServiceInterface
 {
 }
